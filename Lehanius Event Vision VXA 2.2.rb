@@ -1,9 +1,9 @@
 #==============================================================================#
-# Lehanius Event Vision - Vis„o para Eventos
+# Lehanius Event Vision - Vis√£o para Eventos
 #------------------------------------------------------------------------------#
 # Autor: Lehanius
 #
-# Vers„o: VXA 2.2 BR
+# Vers√£o: VXA 2.2 BR
 # Data: d/m 03/11/2013
 #
 # Contatos:
@@ -13,15 +13,15 @@
 #==============================================================================#
 #
 #==============================================================================#
-# DescriÁ„o
+# Descri√ß√£o
 #------------------------------------------------------------------------------#
-#   Este script permite que eventos do mapa tenham vis„o sobre outros eventos 
-# ou sobre o herÛi. A ·rea de obstruÁ„o da vis„o È verificada de forma 
-# relativamente realista, respeitando o ‚ngulo de observaÁ„o.   
+#   Este script permite que eventos do mapa tenham vis√£o sobre outros eventos 
+# ou sobre o her√≥i. A √°rea de obstru√ß√£o da vis√£o √© verificada de forma 
+# relativamente realista, respeitando o √¢ngulo de observa√ß√£o.   
 #==============================================================================#
 #
 #==============================================================================#
-# HistÛrico das versıes
+# Hist√≥rico das vers√µes
 #------------------------------------------------------------------------------#
 # - vxa 2.1 11/01/2012
 # - vxa 2.2 03/11/2013  <> acelera processamento para alvos distantes
@@ -32,12 +32,12 @@
 #------------------------------------------------------------------------------#
 #   - IMPORTANTE:                                                      
 #   * Este script pode ser utilizado livremente para projetos pessoais,
-# porÈm peÁo os devidos crÈditos ao autor.
-#   * Se modificado, este script n„o deve ser distribuÌdo sem que se
+# por√©m pe√ßo os devidos cr√©ditos ao autor.
+#   * Se modificado, este script n√£o deve ser distribu√≠do sem que se
 # explicite que ele foi alterado.
-#   * N„o remova nem altere os coment·rios do cabeÁalho deste script,
-# mesmo se o cÛdigo for alterado. Quando for esse o caso, indique a
-# alteraÁ„o abaixo destes coment·rios.
+#   * N√£o remova nem altere os coment√°rios do cabe√ßalho deste script,
+# mesmo se o c√≥digo for alterado. Quando for esse o caso, indique a
+# altera√ß√£o abaixo destes coment√°rios.
 #   * Se encontrar algum bug, por favor me informe por um dos contatos acima.                                                        
 #                                                                      
 #   - NOTICE:                                                          
@@ -51,58 +51,58 @@
 #==============================================================================#
 
 =begin
-                                INSTRU«’ES
+                                INSTRU√á√ïES
                                
-  Para utilizar este sistema, em cada evento ao qual vocÍ quiser atribuir vis„o,
-devem ser colocados 2 coment·rios.
-  - no primeiro coment·rio, a primeira linha deve ser, obrigatoriamente, 
+  Para utilizar este sistema, em cada evento ao qual voc√™ quiser atribuir vis√£o,
+devem ser colocados 2 coment√°rios.
+  - no primeiro coment√°rio, a primeira linha deve ser, obrigatoriamente, 
 VISION_if (ou PROX_if)
-  - a segunda linha do primeiro coment·rio deve conter, separados por vÌrgula, 
-o alcance da vis„o e o alvo do observador.
-  - o segundo coment·rio geralmente vir· depois de outras linhas de cÛdigo e
+  - a segunda linha do primeiro coment√°rio deve conter, separados por v√≠rgula, 
+o alcance da vis√£o e o alvo do observador.
+  - o segundo coment√°rio geralmente vir√° depois de outras linhas de c√≥digo e
 deve conter, obrigatoriamente, VISION_endif (ou PROX_endif)
  
     Exemplo:
-        OpÁıes de Vari·vel:[0001]=10          |
-      * Coment·rio:VISION_if                  | inÌcio da condiÁ„o
-                   6,0                        | (range = 6, alvo = herÛi)
+        Op√ß√µes de Vari√°vel:[0001]=10          |
+      * Coment√°rio:VISION_if                  | in√≠cio da condi√ß√£o
+                   6,0                        | (range = 6, alvo = her√≥i)
         Reproduzir SE:'Dog',80,100            |
-        OperaÁ„o de Switch Local: A=ON        |
-      * Coment·rio:VISION_endif               | fim da condiÁ„o
+        Opera√ß√£o de Switch Local: A=ON        |
+      * Coment√°rio:VISION_endif               | fim da condi√ß√£o
         Mudar Dinheiro:+1                     |
    
-    Esse cÛdigo nos eventos funciona como uma condiÁ„o: o cÛdigo que est· entre
-  o primeiro coment·rio e o segundo sÛ È executado se o evento vir seu alvo.
+    Esse c√≥digo nos eventos funciona como uma condi√ß√£o: o c√≥digo que est√° entre
+  o primeiro coment√°rio e o segundo s√≥ √© executado se o evento vir seu alvo.
  
-    No exemplo acima, sÛ ser· tocado o SE do cachorro e sÛ ser· alterada a
+    No exemplo acima, s√≥ ser√° tocado o SE do cachorro e s√≥ ser√° alterada a
   switch local A se VISION_if(6, 0) retornar verdadeiro, ou seja, o alvo estiver
-  no campo de vis„o do evento.
+  no campo de vis√£o do evento.
   
-    O sistema de percepÁ„o de proximidade funciona de forma similar ao de vis„o,
-  mas ele usa PROX_if e PROX_endif como limites da condiÁ„o.
+    O sistema de percep√ß√£o de proximidade funciona de forma similar ao de vis√£o,
+  mas ele usa PROX_if e PROX_endif como limites da condi√ß√£o.
                                
  
-  ExplicaÁ„o dos par‚metros:
+  Explica√ß√£o dos par√¢metros:
  
-  A segunda linha do primeiro coment·rio fornece os par‚metros para a vis„o. 
-O primeiro È o range, o alcance da vis„o. Esse alcance È determinado pela 
-dist‚ncia euclidiana entre os tiles e o evento observador.
-  O segundo par‚metro (2∫ linha do primeiro coment·rio, apÛs a vÌrgula), È o 
-evento alvo da vis„o. Seu conte˙do deve ser a ID do evento alvo ou, caso queira 
-que o evento procure o herÛi, esse segundo par‚metro deve ser omitido (ou 0).
+  A segunda linha do primeiro coment√°rio fornece os par√¢metros para a vis√£o. 
+O primeiro √© o range, o alcance da vis√£o. Esse alcance √© determinado pela 
+dist√¢ncia euclidiana entre os tiles e o evento observador.
+  O segundo par√¢metro (2¬∫ linha do primeiro coment√°rio, ap√≥s a v√≠rgula), √© o 
+evento alvo da vis√£o. Seu conte√∫do deve ser a ID do evento alvo ou, caso queira 
+que o evento procure o her√≥i, esse segundo par√¢metro deve ser omitido (ou 0).
 
 
   Terrain Tags:
   
-  Para tornar transparentes tiles n„o-pass·veis (como tiles de ·gua), basta 
+  Para tornar transparentes tiles n√£o-pass√°veis (como tiles de √°gua), basta 
 inserir as tags de terrenos que devem ser transparentes no vetor TRANS_TAGS, nas 
-configuraÁıes, e ajustar as tags no database.
+configura√ß√µes, e ajustar as tags no database.
   
 
   Modo teste:
  
-  O modo teste È apenas um meio para ajudar a visualisar o campo de vis„o do seu
-evento, para que vocÍ possa ajustar seus par‚metros de forma conveniente.
+  O modo teste √© apenas um meio para ajudar a visualisar o campo de vis√£o do seu
+evento, para que voc√™ possa ajustar seus par√¢metros de forma conveniente.
                                
 =end
 
@@ -110,11 +110,11 @@ evento, para que vocÍ possa ajustar seus par‚metros de forma conveniente.
 # + Config - Edite estes valores para configurar o sistema
 #------------------------------------------------------------------------------#
 module LEVS
-ADJUST = 0.75   # ajuste do escopo direcional de oclus„o - n„o modifique
-TRANS_TAGS = [1,2] # valores de tag que devam indicar transparÍncia de tile
+ADJUST = 0.75   # ajuste do escopo direcional de oclus√£o - n√£o modifique
+TRANS_TAGS = [1,2] # valores de tag que devam indicar transpar√™ncia de tile
 #------------------------------------TEST MODE---------------------------------#
 TEST_MODE = true
-DEF_V_COLOR = Color.new( 90, 30, 90, 70)  # cor do campo de vis„o no test mode
+DEF_V_COLOR = Color.new( 90, 30, 90, 70)  # cor do campo de vis√£o no test mode
 DEF_P_COLOR = Color.new(120,120, 30, 70)  # cor do campo de proximidade
 end
 #------------------------------------------------------------------------------#
@@ -125,7 +125,7 @@ end
 #------------------------------------------------------------------------------#
 class Game_Interpreter
   #--------------------------------------------------------------------------
-  # * Coment·rios: verifica a condiÁ„o de vis„o
+  # * Coment√°rios: verifica a condi√ß√£o de vis√£o
   #--------------------------------------------------------------------------
   alias levs_command_108 command_108
   def command_108
@@ -153,7 +153,7 @@ end
 #------------------------------------------------------------------------------#
 class Event_Vision
   #--------------------------------------------------------------------------
-  # * Ajusta o escopo de vis„o do evento
+  # * Ajusta o escopo de vis√£o do evento
   #--------------------------------------------------------------------------
   def direction_adjust(dir, a, b)
     case dir
@@ -188,13 +188,13 @@ class Event_Vision
         unless $game_map.events[i].empty?
           event_com1 = $game_map.events[i].list[0] 
           if event_com1.code == 108
-            # Eventos individuais indicadores de transparÍncia
+            # Eventos individuais indicadores de transpar√™ncia
             if event_com1.parameters[0] == "TRANSPARENT"
               if $game_map.events[i].x == x and $game_map.events[i].y == y
                 return true
               end
             end
-            # Evento indicador de coordenadas de transparÍncia
+            # Evento indicador de coordenadas de transpar√™ncia
             if event_com1.parameters[0] == "TRANS LIST"
               for j in 0...$game_map.events[i].list.length-1
                 if $game_map.events[i].list[j].parameters[0] == x.to_s+","+y.to_s
@@ -212,7 +212,7 @@ class Event_Vision
     return false
   end
   #--------------------------------------------------------------------------
-  # * Verifica se h· obstruÁ„o da vis„o
+  # * Verifica se h√° obstru√ß√£o da vis√£o
   #--------------------------------------------------------------------------
   def hide_check(dir, visible, i, j, c1, c2, dx, dy)
     case dir
@@ -240,7 +240,7 @@ class Event_Vision
     return false   
   end
   #--------------------------------------------------------------------------
-  # * VerificaÁ„o da vis„o do observador sobre seu objetivo
+  # * Verifica√ß√£o da vis√£o do observador sobre seu objetivo
   #--------------------------------------------------------------------------
   def vision(id, range, target)
     @id = id
@@ -255,11 +255,11 @@ class Event_Vision
     else
       target = $game_map.events[target]
     end
-    #Encerra antecipadamente a verificaÁ„o de vis„o se o alvo estiver fora do alcance do observador
+    #Encerra antecipadamente a verifica√ß√£o de vis√£o se o alvo estiver fora do alcance do observador
     if (target.x-obs.x)*(target.x-obs.x)+(target.y-obs.y)*(target.y-obs.y) > range*range
       return false
     end
-    #Determina o alcance de vis„o do observador, independentemente dos obst·culos
+    #Determina o alcance de vis√£o do observador, independentemente dos obst√°culos
     for x in obs.x-range..obs.x+range
       for y in obs.y-range..obs.y+range
         a = x-obs.x
@@ -271,7 +271,7 @@ class Event_Vision
         end
       end
     end
-    # Aplica o ajuste horizontal ou vertical de oclus„o
+    # Aplica o ajuste horizontal ou vertical de oclus√£o
     if obs.direction == 2 or obs.direction == 8 #baixo ou cima
       adjust_x = LEVS::ADJUST
       adjust_y = 0
@@ -279,12 +279,12 @@ class Event_Vision
       adjust_x = 0
       adjust_y = LEVS::ADJUST
     end
-    # Determina os tiles de vis„o obstruÌda
+    # Determina os tiles de vis√£o obstru√≠da
     for i in 0...visible.length
       v_x = visible[i][0]
       v_y = visible[i][1]
       if !$game_map.check_passage(v_x, v_y, 0x0f) and !transparent?(v_x ,v_y) and !LEVS::TRANS_TAGS.include?($game_map.terrain_tag(v_x,v_y))
-        #trata para que o alvo procurado n„o seja identificado como obst·culo
+        #trata para que o alvo procurado n√£o seja identificado como obst√°culo
         if !(v_x == target.x and v_y == target.y)
           c1 = (v_x+adjust_x - obs.x) / (v_y+adjust_y - obs.y)
           c2 = (v_x-adjust_x - obs.x) / (v_y-adjust_y - obs.y)
@@ -300,15 +300,15 @@ class Event_Vision
     end
     # Tiles observados
     @visible_tiles = visible - invisible
-    # Resultado da observaÁ„o
+    # Resultado da observa√ß√£o
     @observed = @visible_tiles.include?([target.x, target.y])
     # TEST MODE
     test_mode if LEVS::TEST_MODE
-    # Retorna o resultado da verificaÁ„o de vis„o
+    # Retorna o resultado da verifica√ß√£o de vis√£o
     return @observed
   end
   #--------------------------------------------------------------------------
-  # * VerificaÁ„o da percepÁ„o de proximidade
+  # * Verifica√ß√£o da percep√ß√£o de proximidade
   #--------------------------------------------------------------------------
   def prox(id, range, target)
     @id = id
@@ -322,7 +322,7 @@ class Event_Vision
     else
       target = $game_map.events[target]
     end
-    #Determina o alcance de vis„o do observador, independentemente dos obst·culos
+    #Determina o alcance de vis√£o do observador, independentemente dos obst√°culos
     for x in obs.x-range..obs.x+range
       for y in obs.y-range..obs.y+range
         a = x-obs.x
@@ -334,7 +334,7 @@ class Event_Vision
         end
       end
     end
-    # Resultado da percepÁ„o de proximidade
+    # Resultado da percep√ß√£o de proximidade
     @prox_close = @prox_area.include?([target.x, target.y])
     # TEST MODE
     test_mode if LEVS::TEST_MODE
@@ -344,11 +344,11 @@ class Event_Vision
   # * TEST MODE
   #--------------------------------------------------------------------------  
   def test_mode
-    show_vision #mostra a ·rea de vis„o
+    show_vision #mostra a √°rea de vis√£o
     print "Alvo detectado" if @observed || @prox_close
   end
   #--------------------------------------------------------------------------
-  # * Mostra a ·rea de vis„o do evento - Test Mode
+  # * Mostra a √°rea de vis√£o do evento - Test Mode
   #--------------------------------------------------------------------------
   def show_vision
     wdt = 64*(@range+1) #bitmap width
