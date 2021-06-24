@@ -3,7 +3,7 @@
 #------------------------------------------------------------------------------#
 # Autor: Lehanius
 #
-# Vers„o: VXA 1.0 BR
+# Vers√£o: VXA 1.0 BR
 # Data: d/m 23/01/2012
 #
 # Contatos:
@@ -13,14 +13,14 @@
 #==============================================================================#
 #
 #==============================================================================#
-# DescriÁ„o
+# Descri√ß√£o
 #------------------------------------------------------------------------------#
-#   Este sistema possibilita que o jogador, eventos ou seguidores se movam atÈ
+#   Este sistema possibilita que o jogador, eventos ou seguidores se movam at√©
 # um objetivo especificado, seja ele um personagem (jogador, evento ou seguidor)
-# ou mesmo um ponto fixo do mapa, contornando qualquer obst·culo que esteja 
-# entre eles, desde que seja contorn·vel, claro.
+# ou mesmo um ponto fixo do mapa, contornando qualquer obst√°culo que esteja 
+# entre eles, desde que seja contorn√°vel, claro.
 #   * Este script depende do script Lehanius Eventer Tools para funcionar; ele
-# pode ser encontrado no fÛrum da santuariorpgmaker em sua vers„o mais atual.
+# pode ser encontrado no f√≥rum da santuariorpgmaker em sua vers√£o mais atual.
 #==============================================================================#
 #
 #==============================================================================#
@@ -28,12 +28,12 @@
 #------------------------------------------------------------------------------#
 #   - IMPORTANTE:                                                      
 #   * Este script pode ser utilizado livremente para projetos pessoais,
-# porÈm peÁo os devidos crÈditos ao autor.
-#   * Se modificado, este script n„o deve ser distribuÌdo sem que se
+# por√©m pe√ßo os devidos cr√©ditos ao autor.
+#   * Se modificado, este script n√£o deve ser distribu√≠do sem que se
 # explicite que ele foi alterado.
-#   * N„o remova nem altere os coment·rios do cabeÁalho deste script,
-# mesmo se o cÛdigo for alterado. Quando for esse o caso, indique a
-# alteraÁ„o abaixo destes coment·rios.
+#   * N√£o remova nem altere os coment√°rios do cabe√ßalho deste script,
+# mesmo se o c√≥digo for alterado. Quando for esse o caso, indique a
+# altera√ß√£o abaixo destes coment√°rios.
 #   * Se encontrar algum bug, por favor me informe por um dos contatos acima.                                                        
 #                                                                      
 #   - NOTICE:                                                          
@@ -47,53 +47,53 @@
 #==============================================================================#
 
 =begin
-                                INSTRU«’ES
+                                INSTRU√á√ïES
                                
   Existem dois modos de funcionamento deste pathfinder:
   
-    - mode 0: "ir para" - para ser usado em cenas, em direÁ„o a locais est·ticos
-      (que n„o se movem), pois o personagem far· o caminho completo atÈ o 
+    - mode 0: "ir para" - para ser usado em cenas, em dire√ß√£o a locais est√°ticos
+      (que n√£o se movem), pois o personagem far√° o caminho completo at√© o 
       objetivo, sem poder ser interrompido;
       
     - mode 1: "ir para sem esperar" - funciona da mesma forma que o mode 0, 
-      exceto pelo fato de que o movimento n„o precisa ser completado para que 
-      se execute o prÛximo comando na lista do evento com o comando de script;
+      exceto pelo fato de que o movimento n√£o precisa ser completado para que 
+      se execute o pr√≥ximo comando na lista do evento com o comando de script;
       
-    - mode 2: "seguir" - para ser usado repetidamente, atÈ mesmo em processos 
-      paralelos, geralmente em direÁ„o a objetivos mÛveis, pois cada vez que 
-      um comando neste modo È chamado, o personagem avanÁa um passo em direÁ„o
-      a seu objetivo, sem interromper as aÁıes do jogador.
+    - mode 2: "seguir" - para ser usado repetidamente, at√© mesmo em processos 
+      paralelos, geralmente em dire√ß√£o a objetivos m√≥veis, pois cada vez que 
+      um comando neste modo √© chamado, o personagem avan√ßa um passo em dire√ß√£o
+      a seu objetivo, sem interromper as a√ß√µes do jogador.
       
   
   Para usar o pathfinder, use um comando de chamar script assim:
   
     Script: pf = LET::PathFinder.new(<inteiro>)
-          : pf.find_path(<objetivo>, <dist‚ncia>, <modo>, <alcance>)
+          : pf.find_path(<objetivo>, <dist√¢ncia>, <modo>, <alcance>)
           
     Sendo que:
       - <inteiro> pode ser: 0 para o personagem; negativo para um seguidor que 
-        ocupa a posiÁ„o '-<inteiro>' na fila; positivo para a ID de um evento.
-        Este ser· o personagem que ir· andar atÈ o objetivo especificado.
+        ocupa a posi√ß√£o '-<inteiro>' na fila; positivo para a ID de um evento.
+        Este ser√° o personagem que ir√° andar at√© o objetivo especificado.
         
-      - <objetivo> pode receber a mesma entrada que <inteiro> alÈm de uma 
-        entrada da classe LET::Point, que È um ponto com valores de x e y, que
+      - <objetivo> pode receber a mesma entrada que <inteiro> al√©m de uma 
+        entrada da classe LET::Point, que √© um ponto com valores de x e y, que
         pode ser definido assim: ponto = LET::Point.new(<x><y>)
         
-      - <dist‚ncia> a dist‚ncia que o personagem deve manter de seu objetivo;
-        se for 0, ele ir· pisar sobre o objetivo; se for maior que 0, manter·
-        alguma dist‚ncia de seu objetivo. Padr„o: 0
+      - <dist√¢ncia> a dist√¢ncia que o personagem deve manter de seu objetivo;
+        se for 0, ele ir√° pisar sobre o objetivo; se for maior que 0, manter√°
+        alguma dist√¢ncia de seu objetivo. Padr√£o: 0
         
-      - <modo> 0, 1 ou 2, j· explicado anteriormente. Padr„o: 0
+      - <modo> 0, 1 ou 2, j√° explicado anteriormente. Padr√£o: 0
       
-      - <alcance> n˙mero m·ximo de tiles a serem percorridos atÈ o objetivo;
-        se a dist‚ncia for maior que o alcance, o personagem n„o ir· tentar
-        seguir o objetivo; o valor padr„o desse par‚metro pode ser modificado 
-        pela vari·vel PF_DEFAULT_RANGE do mÛdulo LET.
+      - <alcance> n√∫mero m√°ximo de tiles a serem percorridos at√© o objetivo;
+        se a dist√¢ncia for maior que o alcance, o personagem n√£o ir√° tentar
+        seguir o objetivo; o valor padr√£o desse par√¢metro pode ser modificado 
+        pela vari√°vel PF_DEFAULT_RANGE do m√≥dulo LET.
     
-  ObservaÁıes:
-    - Note que as opÁıes de passabilidade dos eventos (atravessar, por exemplo)
-    determinar„o quais tiles ser„o pass·veis para eles;
-    - Seguidores tÍm a passabilidade tratada como se fossem o jogador.
+  Observa√ß√µes:
+    - Note que as op√ß√µes de passabilidade dos eventos (atravessar, por exemplo)
+    determinar√£o quais tiles ser√£o pass√°veis para eles;
+    - Seguidores t√™m a passabilidade tratada como se fossem o jogador.
     
 =end
 
@@ -113,8 +113,8 @@ module LET
     # * Encontra o caminho para o local alvo: Game_Character ou LET::Point
     # target: identificador do personagem (negativo para seguidores, zero para o
     # jogador e positivo para eventos)
-    # distance: dist‚ncia que o personagem manter· de seu objetivo final
-    # range: dist‚ncia m·xima da rota atÈ o objetivo
+    # distance: dist√¢ncia que o personagem manter√° de seu objetivo final
+    # range: dist√¢ncia m√°xima da rota at√© o objetivo
     # mode: 0 - ir para; 1 - ir para sem esperar; 2 - seguir
     #--------------------------------------------------------------------------
     def find_path(target, distance = 0, mode = 0, range = PF_DEFAULT_RANGE)
@@ -134,7 +134,7 @@ module LET
       check_step = @step-1
       tx = @tx; ty = @ty
       for i in 1...@step
-        dir = [] # vetor de direÁıes para cada passo
+        dir = [] # vetor de dire√ß√µes para cada passo
         dir << 3 if @pfmap[tx-1,ty] == check_step # direita
         dir << 2 if @pfmap[tx+1,ty] == check_step # esquerda
         dir << 1 if @pfmap[tx,ty-1] == check_step # baixo
@@ -164,7 +164,7 @@ module LET
     end
     #--------------------------------------------------------------------------
     # * Mapeia a matriz do pathfind
-    # - mÈtodo utilizado pelo find_path()
+    # - m√©todo utilizado pelo find_path()
     #--------------------------------------------------------------------------    
     def map_pf_matrix(range)
       @pfmap = Table.new($game_map.width, $game_map.height)
@@ -173,7 +173,7 @@ module LET
       @pfmap[@char.x,@char.y] = 1
       @pfmap[@tx,@ty] = rend
       cur_count = 1 # apenas 1 flag de passo 0
-      # LimitaÁ„o de escopo de varredura da matriz:
+      # Limita√ß√£o de escopo de varredura da matriz:
       x_min= @char.x-range > 0 ? @char.x - range : 0
       x_max= @char.x+range < $game_map.width ? @char.x+range : $game_map.width
       y_min= @char.y-range > 0 ? @char.y - range : 0
