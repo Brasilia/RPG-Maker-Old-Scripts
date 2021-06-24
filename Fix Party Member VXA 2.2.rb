@@ -3,7 +3,7 @@
 # Fix Party Member VXA.2.2
 #------------------------------------------------------------------------------#
 # Autor: Lehanius
-# ColaboraÁao: Victor_Sant
+# Colabora√ßao: Victor_Sant
 #
 # Data: d.m. 04/01/2012
 #
@@ -14,10 +14,10 @@
 #==============================================================================#
 
 #==============================================================================#
-# DescriÁ„o
+# Descri√ß√£o
 #------------------------------------------------------------------------------#
-# - Permite que se mantenha determinados membros do grupo fixos na formaÁ„o, 
-# ou seja: o jogador n„o poder· troc·-los por outros membros.
+# - Permite que se mantenha determinados membros do grupo fixos na forma√ß√£o, 
+# ou seja: o jogador n√£o poder√° troc√°-los por outros membros.
 # - O script permite que, durante o jogo, essa lista de personagens fixos seja 
 # modificada, por meio dos comandos $game_actors[id].fixed = <true/false>, 
 # que podem ser chamados por eventos, pelo comando de Chamar Script
@@ -32,7 +32,7 @@
 #==============================================================================#
 module LFPM
   #--------------------------------------------------------------------------
-  # Armazena os Ìndices dos atores inicialmente fixos (a id È a do database)
+  # Armazena os √≠ndices dos atores inicialmente fixos (a id √© a do database)
   # Defina seu valor inicial (pode ser "[]")
   #--------------------------------------------------------------------------
   INIT_FIXED_ACTORS = [7]
@@ -57,11 +57,11 @@ end
 #==============================================================================#
 #==============================================================================#
 # Scene_Menu
-# - Indica ‡ @status_window se o comando ativo È o de formaÁ„o
+# - Indica √† @status_window se o comando ativo √© o de forma√ß√£o
 #------------------------------------------------------------------------------#
 class Scene_Menu < Scene_MenuBase
   #--------------------------------------------------------------------------
-  # Entrada no comando de formaÁ„o
+  # Entrada no comando de forma√ß√£o
   #--------------------------------------------------------------------------
   alias lfpm_command_formation command_formation
   def command_formation
@@ -69,7 +69,7 @@ class Scene_Menu < Scene_MenuBase
     lfpm_command_formation
   end
   #--------------------------------------------------------------------------
-  # Fora do comando de formaÁ„o
+  # Fora do comando de forma√ß√£o
   #--------------------------------------------------------------------------
   alias lfpm_command_personal command_personal
   def command_personal
@@ -82,11 +82,11 @@ end
 #==============================================================================#
 #==============================================================================#
 # Window_MenuStatus
-# - Verifica se o ator atual est· fixo e se o comando ativo È o de formaÁ„o
+# - Verifica se o ator atual est√° fixo e se o comando ativo √© o de forma√ß√£o
 #------------------------------------------------------------------------------#
 class Window_MenuStatus < Window_Selectable
   #--------------------------------------------------------------------------
-  # Modifica a indicaÁ„o de execuÁ„o do comando de formaÁ„o
+  # Modifica a indica√ß√£o de execu√ß√£o do comando de forma√ß√£o
   #--------------------------------------------------------------------------
   attr_accessor :formation_running
   #--------------------------------------------------------------------------
