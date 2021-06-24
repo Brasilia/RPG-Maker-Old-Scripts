@@ -3,7 +3,7 @@
 #------------------------------------------------------------------------------#
 # Autor: Lehanius
 #
-# Vers„o: VXA 1.2 BR
+# Vers√£o: VXA 1.2 BR
 # Data: d/m 17/01/2012
 #
 # Contatos:
@@ -17,12 +17,12 @@
 #------------------------------------------------------------------------------#
 #   - IMPORTANTE:                                                      
 #   * Este script pode ser utilizado livremente para projetos pessoais,
-# porÈm peÁo os devidos crÈditos ao autor.
-#   * Se modificado, este script n„o deve ser distribuÌdo sem que se
+# por√©m pe√ßo os devidos cr√©ditos ao autor.
+#   * Se modificado, este script n√£o deve ser distribu√≠do sem que se
 # explicite que ele foi alterado.
-#   * N„o remova nem altere os coment·rios do cabeÁalho deste script,
-# mesmo se o cÛdigo for alterado. Quando for esse o caso, indique a
-# alteraÁ„o abaixo destes coment·rios.
+#   * N√£o remova nem altere os coment√°rios do cabe√ßalho deste script,
+# mesmo se o c√≥digo for alterado. Quando for esse o caso, indique a
+# altera√ß√£o abaixo destes coment√°rios.
 #   * Se encontrar algum bug, por favor me informe por um dos contatos acima.                                                        
 #                                                                      
 #   - NOTICE:                                                          
@@ -37,46 +37,46 @@
 
 =begin
 #==============================================================================#
-# DescriÁ„o
+# Descri√ß√£o
 #------------------------------------------------------------------------------#
     Este sistema permite que se monte cada grupo inimigo de batalha em tempo 
-  real, ou seja: a tropa inimiga n„o precisa estar configurada no database.
+  real, ou seja: a tropa inimiga n√£o precisa estar configurada no database.
   
-    Os inimigos podem ser especificados por sua ID ou por uma vari·vel.
+    Os inimigos podem ser especificados por sua ID ou por uma vari√°vel.
     
-    AlÈm disso, o sistema oferece suporte a batalhas iniciadas por eventos de 
+    Al√©m disso, o sistema oferece suporte a batalhas iniciadas por eventos de 
   mapa - inimigos no mapa - iniciando a batalha com um grupo que inclui cada um
-  dos inimigos que foi iniciado durante um perÌodo determinado.
+  dos inimigos que foi iniciado durante um per√≠odo determinado.
 #==============================================================================#
 #
 #==============================================================================#
-# InstruÁıes
+# Instru√ß√µes
 #------------------------------------------------------------------------------#
-  - Defina a tropa do database que ser· utilizada como m·scara para indicar as 
-  posiÁıes de cada inimigo na batalha: TROOP_ID
+  - Defina a tropa do database que ser√° utilizada como m√°scara para indicar as 
+  posi√ß√µes de cada inimigo na batalha: TROOP_ID
   
   - No database, em tropas, insira os inimigos (preferencialmente 8, de qualquer
-  tipo) nas posiÁıes em que quer que cada inimigo apareÁa. Lembre-se de que a 
-  ordem em que vocÍ insere cada inimigo importa para a posiÁ„o que ele ocupar·, 
-  ent„o pode ser interessante usar inimigos diferentes para a configuraÁ„o, 
+  tipo) nas posi√ß√µes em que quer que cada inimigo apare√ßa. Lembre-se de que a 
+  ordem em que voc√™ insere cada inimigo importa para a posi√ß√£o que ele ocupar√°, 
+  ent√£o pode ser interessante usar inimigos diferentes para a configura√ß√£o, 
   apenas para lembrar quem foi inserido antes ou depois.
   
-  - Para iniciar uma batalha com tropas din‚micas, basta criar um coment·rio em
+  - Para iniciar uma batalha com tropas din√¢micas, basta criar um coment√°rio em
   um evento da seguinte forma:
-      <>Coment·rio:ENEMY <delay(opcional)>
+      <>Coment√°rio:ENEMY <delay(opcional)>
                   :<inimigo 1>
                   :<inimigo 2>
                   :<inimigo 3>
                   :<...>
       Em que:
-          <delay> È o tempo de espera atÈ que a batalha seja iniciada; isso 
-        serve para que se possa "coletar" mais inimigos para a batalha atÈ que 
-        ela comece. Se esse campo n„o for inserido no coment·rio, ser· usado o 
-        valor padr„o de atraso, definido por BATTLE_DELAY.
+          <delay> √© o tempo de espera at√© que a batalha seja iniciada; isso 
+        serve para que se possa "coletar" mais inimigos para a batalha at√© que 
+        ela comece. Se esse campo n√£o for inserido no coment√°rio, ser√° usado o 
+        valor padr√£o de atraso, definido por BATTLE_DELAY.
           <inimigo> pode ser tanto a ID do inimigo inserido na batalha como uma
-        vari·vel que contenha essa ID. Se for inserido apenas um n˙mero, ele 
-        ser· a ID; se desejar usar uma vari·vel para especificar o inimigo, use
-        "V[n]" na linha de coment·rio, sem aspas, em que "n" È a ID da vari·vel.
+        vari√°vel que contenha essa ID. Se for inserido apenas um n√∫mero, ele 
+        ser√° a ID; se desejar usar uma vari√°vel para especificar o inimigo, use
+        "V[n]" na linha de coment√°rio, sem aspas, em que "n" √© a ID da vari√°vel.
         
   - Se desejar usar uma outra tropa como base para a batalha seguinte, antes da
   chamada de combate use este comando de chamar script, com o id da tropa:
@@ -88,16 +88,16 @@
 # + Config - Edite estes valores para configurar o sistema
 #------------------------------------------------------------------------------#
 module LDT
-  # ID da tropa a ser utilizada como modelo de posiÁ„o em batalha
+  # ID da tropa a ser utilizada como modelo de posi√ß√£o em batalha
   TROOP_ID = 31
-  # Tempo de espera padr„o para o inÌcio da batalha, desde sua primeira chamada
+  # Tempo de espera padr√£o para o in√≠cio da batalha, desde sua primeira chamada
   BATTLE_DELAY = 60 # frames
 end
 #------------------------------------------------------------------------------#
 # END Config
 #==============================================================================#
 #==============================================================================#
-# Game_Temp - gerencia as vari·veis globais do sistema
+# Game_Temp - gerencia as vari√°veis globais do sistema
 #------------------------------------------------------------------------------#
 class Game_Temp
   attr_accessor :ldt_troop
@@ -130,7 +130,7 @@ end
 #------------------------------------------------------------------------------#
 class Game_Interpreter 
   #--------------------------------------------------------------------------
-  # * Processamento da batalha - correÁ„o de batalhas simult‚neas
+  # * Processamento da batalha - corre√ß√£o de batalhas simult√¢neas
   #--------------------------------------------------------------------------
   alias ldt_command_301 command_301
   def command_301
@@ -138,7 +138,7 @@ class Game_Interpreter
     ldt_command_301
   end
   #--------------------------------------------------------------------------
-  # * Coment·rios - monta o grupo de batalha
+  # * Coment√°rios - monta o grupo de batalha
   #--------------------------------------------------------------------------
   alias ldt_command_108 command_108
   def command_108
@@ -179,9 +179,9 @@ end
 #------------------------------------------------------------------------------#
 class Game_Troop < Game_Unit
   #--------------------------------------------------------------------------
-  # * ConfiguraÁ„o do grupo de inimigos
+  # * Configura√ß√£o do grupo de inimigos
   #     troop_id : ID do grupo de inimigos
-  #   - No LDT, inclui apenas os inimigos adicionados ‡ batalha
+  #   - No LDT, inclui apenas os inimigos adicionados √† batalha
   #--------------------------------------------------------------------------
   def setup(troop_id)
     clear
